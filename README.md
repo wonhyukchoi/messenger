@@ -25,10 +25,39 @@ A one message-room messenger app with a web interface &amp; mobile app versions.
 
 #### `users`    
 * `user_id`: User id, could be hashed or not. `u8`.
+* `username`: User name, `varchar(256)`.
+* `password`: Password, md5 hashed value.
 * `settings`
     * `is_dark_mode`: `bool`
 
+### Blob storage
+Blob storages for images and media.
+
 ### Tech Stack
+* Server: Amazon AWS EC2
 * Database: `MySQL`
 * Backend: `Haskell` `Yesod`
 * Frontend: `TypeScript`, likely `React` (subject to change)
+
+## Roadmap
+### Prototype
+* Local host with one sender
+* `sqlite`
+* Messages, links, dark mode
+
+### V0
+* Multiple users
+* AWS with support for user login
+* Minimal UI
+
+### V1
+* Images and videos
+* `MySQL`
+
+### V2
+* Search function
+* Filter function
+* "Response" function
+
+### V3
+* Mobile version
