@@ -22,6 +22,7 @@ A one message-room messenger app with a web interface &amp; mobile app versions.
 * `is_file`: `bool`
 * `has_link`: `bool`
 * `msg_body`: `text`
+* `response_to`: `u32`, tagging back to `message_id`
 
 #### `users`    
 * `user_id`: User id, could be hashed or not. `u8`.
@@ -44,6 +45,7 @@ Blob storages for images and media.
 * Local host with one sender
 * `sqlite`
 * Messages, links, dark mode
+* Full Yesod
 
 ### V0
 * Multiple users
@@ -53,6 +55,7 @@ Blob storages for images and media.
 ### V1
 * Images and videos
 * `MySQL`
+* React / Typescript
 
 ### V2
 * Search function
@@ -61,3 +64,16 @@ Blob storages for images and media.
 
 ### V3
 * Mobile version
+
+
+## Developer Guide
+1. The modern way to install `GHC` and `Stack` is via [`ghcup`](https://www.haskell.org/ghcup/).
+2. Install the `yesod` command line tool: `stack install yesod-bin --install-ghc`
+3. Build libraries: `stack build`
+
+* Running in development mode: `stack exec -- yesod devel`
+* Tests: `stack test --flag messenger:library-only --flag messenger:dev ` 
+(Because `yesod devel` passes the `library-only` and `dev` flags, matching those flags means you don't need to recompile between tests and development, and it disables optimization to speed up your test compile times).
+* For local documentation, use:
+	* `stack haddock --open` to generate Haddock documentation for your dependencies, and open that documentation in a browser
+	* `stack hoogle <function, module or type signature>` to generate a Hoogle database and search for your query
