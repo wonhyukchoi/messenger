@@ -19,7 +19,8 @@
 # resolver: https://example.com/snapshots/2018-01-01.yaml
 resolver:
   # url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/19/33.yaml
-  lts-18.28
+  lts-20.3
+  # lts-18.28
 
 # User packages to be built.
 # Various formats can be used as shown in the example below.
@@ -67,3 +68,4 @@ extra-deps:
 #
 # Allow a newer minor version of GHC than the snapshot specifies
 # compiler-check: newer-minor
+allow-newer: true

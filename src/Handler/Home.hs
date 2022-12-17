@@ -7,7 +7,7 @@ module Handler.Home where
 
 import Import
 import Yesod.Form.Bootstrap3 (BootstrapFormLayout (..), renderBootstrap3)
-import Text.Julius (RawJS (..))
+-- import Text.Julius (RawJS (..))
 
 -- Define our data that will be used for creating the form.
 data FileForm = FileForm
@@ -24,31 +24,28 @@ data FileForm = FileForm
 -- inclined, or create a single monolithic file.
 getHomeR :: Handler Html
 getHomeR = do
-    (formWidget, formEnctype) <- generateFormPost sampleForm
-    let submission = Nothing :: Maybe FileForm
-        handlerName = "getHomeR" :: Text
-    allComments <- runDB $ getAllComments
+    -- (formWidget, formEnctype) <- generateFormPost sampleForm
+    -- let submission = Nothing :: Maybe FileForm
+    --     handlerName = "getHomeR" :: Text
 
     defaultLayout $ do
-        let (commentFormId, commentTextareaId, commentListId) = commentIds
         aDomId <- newIdent
-        setTitle "Welcome To Yesod!"
+        setTitle "Messenger"
         $(widgetFile "homepage")
 
 postHomeR :: Handler Html
-postHomeR = do
-    ((result, formWidget), formEnctype) <- runFormPost sampleForm
-    let handlerName = "postHomeR" :: Text
-        submission = case result of
-            FormSuccess res -> Just res
-            _ -> Nothing
-    allComments <- runDB $ getAllComments
+postHomeR = error "foo"
+-- postHomeR = do
+--     ((result, formWidget), formEnctype) <- runFormPost sampleForm
+--     let handlerName = "postHomeR" :: Text
+--         submission = case result of
+--             FormSuccess res -> Just res
+--             _ -> Nothing
 
-    defaultLayout $ do
-        let (commentFormId, commentTextareaId, commentListId) = commentIds
-        aDomId <- newIdent
-        setTitle "Welcome To Yesod!"
-        $(widgetFile "homepage")
+--     defaultLayout $ do
+--         aDomId <- newIdent
+--         setTitle "Welcome To Yesod!"
+--         $(widgetFile "homepage")
 
 sampleForm :: Form FileForm
 sampleForm = renderBootstrap3 BootstrapBasicForm $ FileForm
@@ -65,9 +62,3 @@ sampleForm = renderBootstrap3 BootstrapBasicForm $ FileForm
                 , ("placeholder", "File description")
                 ]
             }
-
-commentIds :: (Text, Text, Text)
-commentIds = ("js-commentForm", "js-createCommentTextarea", "js-commentList")
-
-getAllComments :: DB [Entity Comment]
-getAllComments = selectList [] [Asc CommentId]

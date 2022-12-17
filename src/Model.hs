@@ -11,6 +11,7 @@
 {-# LANGUAGE StandaloneDeriving         #-}
 {-# LANGUAGE UndecidableInstances       #-}
 {-# LANGUAGE DataKinds                  #-}
+{-# OPTIONS_GHC -Wno-name-shadowing     #-}
 module Model where
 
 import ClassyPrelude.Yesod
