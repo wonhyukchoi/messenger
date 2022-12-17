@@ -7,7 +7,7 @@ A one message-room messenger app with a web interface &amp; mobile app versions.
 * "Response" messages
 * View links, images + videos, files separately
 * Search function
-* Dark mode
+* Dark mode (cookie)
 
 ## Implementation Details
 
@@ -28,8 +28,6 @@ A one message-room messenger app with a web interface &amp; mobile app versions.
 * `user_id`: User id, could be hashed or not. `u8`.
 * `username`: User name, `varchar(256)`.
 * `password`: Password, md5 hashed value.
-* `settings`
-    * `is_dark_mode`: `bool`
 
 ### Blob storage
 Blob storages for images and media.
@@ -41,28 +39,29 @@ Blob storages for images and media.
 * Frontend: `TypeScript`, likely `React` (subject to change)
 
 ## Roadmap
-### Prototype
+### [ ] Prototype
 * Local host with one sender
 * `sqlite`
-* Messages, links, dark mode
+* Messages, links
 * Full Yesod
 
-### V0
+### [ ] V0
 * Multiple users
 * AWS with support for user login
 * Minimal UI
 
-### V1
+### [ ] V1
 * Images and videos
 * `MySQL`
 * React / Typescript
+* Dark mode
 
-### V2
+### [ ] V2
 * Search function
 * Filter function
 * "Response" function
 
-### V3
+### [ ] V3
 * Mobile version
 
 

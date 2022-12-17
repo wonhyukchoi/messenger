@@ -1,4 +1,11 @@
-<main>
-    <section>
-        <article>
-            <p> Foo
+<body>
+    <main>
+        <section>
+            <article>
+                <form method=post action=@{HomeR} enctype=#{formEnctype}>
+                    ^{formWidget}
+            <article>
+                $maybe result <- submission
+                    <p> We got result: #{result}
+                $nothing
+                    <p> No messsage was sent, or there is an error.
