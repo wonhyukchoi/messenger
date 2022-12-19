@@ -1,0 +1,5 @@
+* User auth (how do you keep track of which user you are?)
+* Response to: how do you implement this securely? Without exposing the message id to the outside world (or else it could be spoofed?)
+    --> Maybe not _too_ big a concern, idk. You can response to messages manually if you so desire.
+
+* Image: should be ctrl+c possible. Video and file can use upload button if you desire.

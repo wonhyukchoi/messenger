@@ -7,6 +7,7 @@
 module Handler.Home where
 
 import Import
+-- import Network.Wai.Middleware.Approot (hardcoded)
 -- import Yesod.Form.Bootstrap3 (BootstrapFormLayout (..), renderBootstrap3)
 -- import Text.Julius (RawJS (..))
 
@@ -19,7 +20,7 @@ import Import
 -- inclined, or create a single monolithic file.
 getHomeR :: Handler Html
 getHomeR = do
-    (formWidget, formEnctype) <- generateFormPost sampleForm
+    (formWidget, formEnctype) <- generateFormPost inputForm
     let submission = Nothing :: Maybe Text
         handlerName = "getHomeR" :: Text
 
@@ -34,11 +35,14 @@ getHomeR = do
 
 postHomeR :: Handler Html
 postHomeR = do
-    ((result, formWidget), formEnctype) <- runFormPost sampleForm
+    ((result, formWidget), formEnctype) <- runFormPost inputForm
     let handlerName = "postHomeR" :: Text
         submission = case result of
-            FormSuccess res -> Just res
-            _ -> Nothing
+            FormFailure _   -> error "This should never happen!"
+            FormMissing     -> Nothing
+            FormSuccess res -> case res of
+              InputText _ msg -> Just msg
+              _               -> error "Unimplemented Error"
 
     defaultLayout $ do
         aDomId <- newIdent
@@ -49,17 +53,30 @@ postHomeR = do
             |]
         $(widgetFile "homepage")
 
-sampleForm :: Form Text
-sampleForm = renderDivs (areq textField "Enter your message: " Nothing)
-    -- <$> areq textField textSettings Nothing
-    -- Add attributes like the placeholder and CSS classes.
-    -- where textSettings = FieldSettings
-    --         { fsLabel = "What's on the file?"
-    --         , fsTooltip = Nothing
-    --         , fsId = Nothing
-    --         , fsName = Nothing
-    --         , fsAttrs =
-    --             [ ("class", "form-control")
-    --             , ("placeholder", "File description")
-    --             ]
-    --         }
+sampleMetadata :: MessageMetadata
+sampleMetadata = MessageMetadata Nothing False
+
+data UserInput =
+    InputText  MessageMetadata Text
+  | InputImage MessageMetadata ByteString
+  | InputVideo MessageMetadata ByteString
+
+data MessageMetadata =
+  MessageMetadata { msgResponseTo :: Maybe MessageId
+                  , msgHasLink    :: Bool
+                  }
+
+inputForm :: Form UserInput -- aka Html -> MForm Handler (FormResult , Widget)
+inputForm =
+  renderDivs $ InputText sampleMetadata <$> areq textField formSettings Nothing
+  where
+    formSettings = FieldSettings
+        { fsLabel = "Enter your message: "
+        , fsTooltip = Nothing
+        , fsId = Nothing
+        , fsName = Nothing
+        , fsAttrs =
+            [ ("class", "form-control")
+            , ("placeholder", "Enter message here...")
+            ]
+        }

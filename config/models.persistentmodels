@@ -3,13 +3,13 @@
 
 Message
     sender_id UserId
-    timestamp UTCTime
     msgBody Text
     imgId Int64 Maybe
     vidId Int64 Maybe
     fileId Int64 Maybe
-    responseTo Int64 Maybe
+    responseTo MessageId Maybe
     hasLink Bool
+    timestamp UTCTime
 User
     userName Text
     password Text
