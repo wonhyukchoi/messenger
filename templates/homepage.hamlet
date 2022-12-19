@@ -2,8 +2,8 @@
     <main>
         <section>
             <article>
-                <form method=post action=@{HomeR} enctype=#{formEnctype}>
-                    ^{formWidget}
-            <article>
                 $forall message <- allMessages
                     <li>#{displayMessage $ entityVal message}
+            <article>
+                <form method=post action=@{HomeR} enctype=#{formEnctype}>
+                    ^{formWidget}
