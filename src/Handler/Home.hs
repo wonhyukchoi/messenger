@@ -47,8 +47,9 @@ postHomeR = do
     FormSuccess input -> void $ runDB $ insertUserInput input
   redirect HomeR
 
-sampleMetadata :: MessageMetadata
-sampleMetadata = MessageMetadata Nothing False
+-- TODO: Improve this simple version
+hasLink :: Text -> Bool
+hasLink = isInfixOf "http" 
 
 data UserInput
   = InputText MessageMetadata Text
@@ -62,7 +63,7 @@ data MessageMetadata = MessageMetadata
 
 inputForm :: Form UserInput -- aka Html -> MForm Handler (FormResult , Widget)
 inputForm =
-  renderDivs $ InputText sampleMetadata <$> areq textField formSettings Nothing
+  renderDivs $ generateMetadata <$> areq textField formSettings Nothing
   where
     formSettings =
       FieldSettings
@@ -75,6 +76,9 @@ inputForm =
               ("placeholder", "Enter message here...")
             ]
         }
+    generateMetadata :: Text -> UserInput
+    generateMetadata userInput = InputText meta userInput
+      where meta = MessageMetadata Nothing $ hasLink userInput
 
 insertUserInput ::
   MonadIO m =>
