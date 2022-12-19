@@ -10,7 +10,6 @@
 module Handler.Home where
 
 import qualified Data.List as List
-import Data.Time.Clock (getCurrentTime)
 import Import
 
 -- import Network.Wai.Middleware.Approot (hardcoded)
@@ -39,24 +38,14 @@ getHomeR = do
             |]
     $(widgetFile "homepage")
 
-postHomeR :: Handler Html
+postHomeR :: Handler ()
 postHomeR = do
-  let handlerName = "getHomeR" :: Text
-  ((result, formWidget), formEnctype) <- runFormPost inputForm
+  ((result, _), _) <- runFormPost inputForm
   case result of
     FormFailure _ -> error "This should never happen!"
     FormMissing -> return ()
     FormSuccess input -> void $ runDB $ insertUserInput input
-  allMessages <- runDB getAllMessages
-
-  defaultLayout $ do
-    aDomId <- newIdent
-    setTitle "Messenger"
-    toWidgetHead
-      [hamlet|
-                <meta name=handler content=#{handlerName}>
-            |]
-    $(widgetFile "homepage")
+  redirect HomeR
 
 sampleMetadata :: MessageMetadata
 sampleMetadata = MessageMetadata Nothing False
