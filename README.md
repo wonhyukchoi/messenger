@@ -39,29 +39,29 @@ Blob storages for images and media.
 * Frontend: `TypeScript`, likely `React` (subject to change)
 
 ## Roadmap
-### [ ] Prototype
+### &#x2610; Prototype
 * Local host with one sender
 * `sqlite`
 * Messages, links
 * Full Yesod
 
-### [ ] V0
+### &#x2610; V0
 * Multiple users
 * AWS with support for user login
 * Minimal UI
 
-### [ ] V1
+### &#x2610; V1
 * Images and videos
 * `MySQL`
 * React / Typescript
 * Dark mode
 
-### [ ] V2
+### &#x2610; V2
 * Search function
 * Filter function
 * "Response" function
 
-### [ ] V3
+### &#x2610; V3
 * Mobile version
 
 
