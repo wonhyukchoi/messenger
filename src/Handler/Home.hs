@@ -26,9 +26,9 @@ import Import
 -- inclined, or create a single monolithic file.
 getHomeR :: Handler Html
 getHomeR = do
+  let handlerName = "getHomeR" :: Text
   (formWidget, formEnctype) <- generateFormPost inputForm
-  let submission = Nothing :: Maybe Text
-      handlerName = "getHomeR" :: Text
+  allMessages <- runDB getAllMessages
 
   defaultLayout $ do
     aDomId <- newIdent
@@ -41,14 +41,13 @@ getHomeR = do
 
 postHomeR :: Handler Html
 postHomeR = do
+  let handlerName = "getHomeR" :: Text
   ((result, formWidget), formEnctype) <- runFormPost inputForm
-  let handlerName = "postHomeR" :: Text
-      submission = case result of
-        FormFailure _ -> error "This should never happen!"
-        FormMissing -> Nothing
-        FormSuccess res -> case res of
-          InputText _ msg -> Just msg
-          _ -> error "Unimplemented Error"
+  case result of
+    FormFailure _ -> error "This should never happen!"
+    FormMissing -> return ()
+    FormSuccess input -> void $ runDB $ insertUserInput input
+  allMessages <- runDB getAllMessages
 
   defaultLayout $ do
     aDomId <- newIdent
@@ -99,3 +98,9 @@ insertUserInput = \case
     let nonTextOption = Nothing
     insert $ Message senderId msg nonTextOption nonTextOption nonTextOption msgResponseTo msgHasLink timestamp
   _ -> error "Not Implemented Error"
+
+getAllMessages :: DB [Entity Message]
+getAllMessages = selectList [] [Asc MessageId]
+
+displayMessage :: Message -> Text
+displayMessage = messageMsgBody

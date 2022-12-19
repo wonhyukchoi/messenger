@@ -5,7 +5,5 @@
                 <form method=post action=@{HomeR} enctype=#{formEnctype}>
                     ^{formWidget}
             <article>
-                $maybe result <- submission
-                    <p> We got result: #{result}
-                $nothing
-                    <p> No messsage was sent, or there is an error.
+                $forall message <- allMessages
+                    <li>#{displayMessage $ entityVal message}
