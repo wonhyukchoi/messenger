@@ -39,31 +39,34 @@ Blob storages for images and media.
 * Frontend: `TypeScript`, likely `React` (subject to change)
 
 ## Roadmap
-### &#x2610; Prototype
+### &#x2611; Alpha
 * Local host with one sender
 * `sqlite`
 * Messages, links
 * Full Yesod
-
-### &#x2610; V0
-* Multiple users
-* AWS with support for user login
 * Minimal UI
 
-### &#x2610; V1
-* Images and videos
-* `MySQL`
+### &#x2610; Beta
+* Multiple users
+* Show "links" page
+
+### &#x2610; V0: Frontend Upgrade
+* Pagination
 * React / Typescript
 * Dark mode
 
-### &#x2610; V2
+### &#x2610; V1: Feature Support
+* Images and videos
 * Search function
 * Filter function
 * "Response" function
 
-### &#x2610; V3
-* Mobile version
+### &#x2610; V2: Infra Upgrade
+* `MySQL`
+* AWS with support for user login
 
+### &#x2610; V3: Mobile Version
+* Mobile version
 
 ## Developer Guide
 1. The modern way to install `GHC` and `Stack` is via [`ghcup`](https://www.haskell.org/ghcup/).
