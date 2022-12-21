@@ -2,6 +2,8 @@
     <main>
         <section>
             <article>
+                <a href=@{LinkR}>View all links
+            <article>
                 $forall message <- allMessages
                     <li>#{displayMessage $ entityVal message}
             <article>

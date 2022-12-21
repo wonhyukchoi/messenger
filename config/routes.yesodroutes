@@ -6,4 +6,5 @@
 /favicon.ico FaviconR GET
 /robots.txt RobotsR GET
 
-/ HomeR GET POST
+/     HomeR GET POST
+/link LinkR GET

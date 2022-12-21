@@ -94,6 +94,3 @@ insertUserInput = \case
 
 getAllMessages :: DB [Entity Message]
 getAllMessages = selectList [] [Asc MessageId]
-
-displayMessage :: Message -> Text
-displayMessage = messageMsgBody

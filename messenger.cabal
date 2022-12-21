@@ -26,6 +26,7 @@ library
       Foundation
       Handler.Common
       Handler.Home
+      Handler.Link
       Import
       Import.NoFoundation
       Model

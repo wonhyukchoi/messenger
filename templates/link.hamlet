@@ -1,0 +1,6 @@
+<body>
+    <main>
+        <section>
+            <article>
+                $forall message <- messagesWithLink
+                    <li>#{displayMessage $ entityVal message}
