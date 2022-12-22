@@ -73,6 +73,7 @@ library
     , yaml ==0.11.*
     , yesod ==1.6.*
     , yesod-auth ==1.6.*
+    , yesod-auth-oauth2
     , yesod-core ==1.6.*
     , yesod-form >=1.6 && <1.8
     , yesod-static ==1.6.*
@@ -129,6 +130,7 @@ executable messenger
     , yaml ==0.11.*
     , yesod ==1.6.*
     , yesod-auth ==1.6.*
+    , yesod-auth-oauth2
     , yesod-core ==1.6.*
     , yesod-form >=1.6 && <1.8
     , yesod-static ==1.6.*
@@ -189,6 +191,7 @@ test-suite messenger-test
     , yaml ==0.11.*
     , yesod ==1.6.*
     , yesod-auth ==1.6.*
+    , yesod-auth-oauth2
     , yesod-core ==1.6.*
     , yesod-form >=1.6 && <1.8
     , yesod-static ==1.6.*
