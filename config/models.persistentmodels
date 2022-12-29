@@ -11,6 +11,5 @@ Message
     hasLink Bool
     timestamp UTCTime
 User
-    userName Text
-    password Text
-    UniqueName userName
+    name Text
+    UniqueUser name

@@ -23,6 +23,8 @@ flag library-only
 library
   exposed-modules:
       Application
+      Auth.Auth
+      Auth.Secret
       Foundation
       Handler.Common
       Handler.Home

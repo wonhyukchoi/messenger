@@ -16,15 +16,14 @@ import Text.Jasmine         (minifym)
 import Control.Monad.Logger (LogSource)
 import Data.Kind (Type)
 
--- Used only when in "auth-dummy-login" setting is enabled.
--- import Yesod.Auth.Dummy
-
 -- import Yesod.Auth.OpenId    (authOpenId, IdentifierType (Claimed))
 import Yesod.Default.Util   (addStaticContentExternal)
 import Yesod.Core.Types     (Logger)
 import qualified Yesod.Core.Unsafe as Unsafe
 import qualified Data.CaseInsensitive as CI
 import qualified Data.Text.Encoding as TE
+
+import Auth.Auth (googleOAuth2Plugin)
 
 -- | The foundation datatype for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
@@ -160,6 +159,43 @@ instance YesodPersist App where
 instance YesodPersistRunner App where
     getDBRunner :: Handler (DBRunner App, Handler ())
     getDBRunner = defaultGetDBRunner appConnPool
+
+instance YesodAuth App where
+    type AuthId App = UserId
+
+    -- Where to send a user after successful login
+    loginDest :: App -> Route App
+    loginDest _ = HomeR
+    -- Where to send a user after logout
+    logoutDest :: App -> Route App
+    logoutDest _ = HomeR
+    -- Override the above two destinations when a Referer: header is present
+    redirectToReferer :: App -> Bool
+    redirectToReferer _ = True
+
+    authenticate :: (MonadHandler m, HandlerSite m ~ App)
+                 => Creds App -> m (AuthenticationResult App)
+    authenticate creds = liftHandler $ runDB $ do
+        x <- getBy $ UniqueUser $ credsIdent creds
+        case x of
+            Just (Entity uid _) -> return $ Authenticated uid
+            Nothing -> Authenticated <$> insert User
+                { userName = credsIdent creds
+                }
+
+    -- You can add other plugins like Google Email, email or OAuth here
+    authPlugins :: App -> [AuthPlugin App]
+    authPlugins _ = [googleOAuth2Plugin]
+
+-- | Access function to determine if a user is logged in.
+isAuthenticated :: Handler AuthResult
+isAuthenticated = do
+    muid <- maybeAuthId
+    return $ case muid of
+        Nothing -> Unauthorized "You must login to access this page"
+        Just _ -> Authorized
+
+instance YesodAuthPersist App
 
 -- This instance is required to use forms. You can modify renderMessage to
 -- achieve customized and internationalized form validation messages.

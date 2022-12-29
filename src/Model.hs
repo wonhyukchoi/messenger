@@ -12,7 +12,7 @@
 {-# LANGUAGE UndecidableInstances       #-}
 {-# LANGUAGE DataKinds                  #-}
 {-# OPTIONS_GHC -Wno-name-shadowing     #-}
-{-# OPTIONS_GHC -ddump-splices          #-}
+-- {-# OPTIONS_GHC -ddump-splices          #-}
 module Model where
 
 import ClassyPrelude.Yesod

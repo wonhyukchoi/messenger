@@ -8,3 +8,4 @@
 
 /     HomeR GET POST
 /link LinkR GET
+/auth AuthR Auth getAuth
