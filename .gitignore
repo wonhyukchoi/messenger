@@ -11,6 +11,8 @@ cabal-dev
 .hpc
 .hsenv
 .cabal-sandbox/
+.stack-work
+.stack-work-devel
 cabal.sandbox.config
 *.prof
 *.aux
@@ -21,5 +23,4 @@ cabal.project.local
 cabal.project.local~
 .HTF/
 .ghc.environment.*
-*.json
 Secret.hs

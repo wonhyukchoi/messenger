@@ -9,7 +9,6 @@
 
 module Handler.Home where
 
-import qualified Data.List as List
 import Import
 
 -- import Network.Wai.Middleware.Approot (hardcoded)
@@ -28,6 +27,7 @@ getHomeR = do
   let handlerName = "getHomeR" :: Text
   (formWidget, formEnctype) <- generateFormPost inputForm
   allMessages <- runDB getAllMessages
+  maid <- maybeAuthId
 
   defaultLayout $ do
     aDomId <- newIdent
@@ -40,12 +40,16 @@ getHomeR = do
 
 postHomeR :: Handler ()
 postHomeR = do
-  ((result, _), _) <- runFormPost inputForm
-  case result of
-    FormFailure _ -> error "This should never happen!"
-    FormMissing -> return ()
-    FormSuccess input -> void $ runDB $ insertUserInput input
-  redirect HomeR
+  maid <- maybeAuthId
+  case maid of
+    Nothing -> redirect $ AuthR LoginR
+    Just senderId -> do
+      ((result, _), _) <- runFormPost inputForm
+      case result of
+        FormFailure _ -> error "This should never happen!"
+        FormMissing -> return ()
+        FormSuccess input -> void $ runDB $ insertUserInput senderId input
+      redirect HomeR
 
 -- TODO: Improve this simple version
 hasLink :: Text -> Bool
@@ -82,12 +86,12 @@ inputForm =
 
 insertUserInput ::
   MonadIO m =>
+  UserId    ->
   UserInput ->
   ReaderT SqlBackend m MessageId
-insertUserInput = \case
+insertUserInput senderId = \case
   InputText MessageMetadata {..} msg -> do
     timestamp <- liftIO getCurrentTime
-    senderId <- List.head <$> selectKeysList [] []
     let nonTextOption = Nothing
     insert $ Message senderId msg nonTextOption nonTextOption nonTextOption msgResponseTo msgHasLink timestamp
   _ -> error "Not Implemented Error"

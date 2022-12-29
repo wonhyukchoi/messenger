@@ -1,11 +1,18 @@
 <body>
     <main>
         <section>
-            <article>
-                <a href=@{LinkR}>View all links
-            <article>
-                $forall message <- allMessages
-                    <li>#{displayMessage $ entityVal message}
-            <article>
-                <form method=post action=@{HomeR} enctype=#{formEnctype}>
-                    ^{formWidget}
+            $maybe _ <- maid
+                <article>
+                    <a href=@{AuthR LogoutR}> Logout
+                <article>
+                    <a href=@{LinkR}>View all links
+                <article>
+                    $forall message <- allMessages
+                        <li>#{displayMessage $ entityVal message}
+                <article>
+                    <form method=post action=@{HomeR} enctype=#{formEnctype}>
+                        ^{formWidget}
+            $nothing
+                <article>
+                    <p> You must log-in to use this application.
+                    <a href=@{AuthR LoginR}>Login

@@ -46,14 +46,14 @@ Blob storages for images and media.
 * Full Yesod
 * Minimal UI
 
-### &#x2610; Beta
+### &#x2611; Beta
 * Multiple users
 * Show "links" page
 
 ### &#x2610; V0: Frontend Upgrade
 * Pagination
-* React / Typescript
 * Dark mode
+* General UI upgrades, e.g. bootstrap
 
 ### &#x2610; V1: Feature Support
 * Images and videos

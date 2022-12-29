@@ -21,6 +21,6 @@ instance FromJSON OAuth2 where
 googleOAuth2Plugin :: YesodAuth m => AuthPlugin m
 googleOAuth2Plugin = oauth2GoogleScoped scopes (clientId oauth2) (clientSecret oauth2)
     where oauth2 = case decodeStrict googleClientSecret of
-            Nothing  -> error "This should never happen"
+            Nothing  -> error "This should never happen!"
             Just val -> val
-          scopes = ["openid"]
+          scopes = ["profile", "email", "openid"]

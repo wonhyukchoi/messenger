@@ -17,6 +17,7 @@ module Model where
 
 import ClassyPrelude.Yesod
 import Database.Persist.Quasi
+import qualified Data.Text as Text
 
 -- You can define all of your database entities in the entities file.
 -- You can find more information on persistent and how to declare entities
@@ -26,4 +27,13 @@ share [mkPersist sqlSettings, mkMigrate "migrateAll"]
     $(persistFileWith lowerCaseSettings "config/models.persistentmodels")
 
 displayMessage :: Message -> Text
-displayMessage = messageMsgBody
+displayMessage msg = Text.unwords [ "("
+                                  ,time
+                                  , ")"
+                                  , sender
+                                  , ":"
+                                  , content
+                                  ]
+  where time    = formatW3 $ messageTimestamp msg
+        sender  = Text.pack $ show $ messageSender_id msg
+        content = messageMsgBody msg
